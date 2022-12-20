@@ -1,24 +1,25 @@
 <script>
     import { createClient } from "@supabase/supabase-js";
-	import { prevent_default } from "svelte/internal";
     const supabaseUrl = 'https://gzytpbcundzfdkivabpf.supabase.co'
-    const supabaseKey = '1';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd6eXRwYmN1bmR6ZmRraXZhYnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzEyMjc2NDcsImV4cCI6MTk4NjgwMzY0N30.Yrpo6rBSrGCKrTVXb7ut35hA1GaMRlYrSEh15lPDmoo';
     const supabase = createClient(supabaseUrl, supabaseKey)    
 
     let email;
     let user;
-    async function verifyUser(email) {
+    async function verifyUser() {
         const { data, error } = await supabase
         .from('users')
-        .select('email')
+        .select(`email`)
         .eq('email', email)
+        .single()
 
         if(data) {
-            user = data.email
+            user = data["email"];
+            user = user;
         }
         
         if(error) {
-            console.log(error)
+            console.log(error);
         }
     }
 </script>
@@ -31,5 +32,7 @@
 
 {#if email}
     <button on:click={ verifyUser(email) }>Login</button>
-    <h1>{user}</h1>
+    {#if user}
+        <h1>{user}</h1>
+    {/if}
 {/if}
