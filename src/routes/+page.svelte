@@ -2,11 +2,11 @@
 
 <script>
     import { createClient } from "@supabase/supabase-js";
-    import { env } from '$env/static/public';
+    import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_KEY } from '$env/dynamic/public';
     import { goto } from "$app/navigation"
     
-    const supabaseUrl = env.PUBLIC_SUPABASE_URL;
-    const supabaseKey = env.PUBLIC_SUPABASE_KEY;
+    const supabaseUrl = PUBLIC_SUPABASE_URL;
+    const supabaseKey = PUBLIC_SUPABASE_KEY;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
     let email;
