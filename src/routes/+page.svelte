@@ -5,8 +5,8 @@
     import { env } from '$env/dynamic/public';
     import { goto } from "$app/navigation"
     
-    const supabaseUrl = env.PUBLIC_SUPABASE_URL;
-    const supabaseKey = env.PUBLIC_SUPABASE_KEY;
+    const supabaseUrl = 'https://gzytpbcundzfdkivabpf.supabase.co';
+    const supabaseKey = '1';
     const supabase = createClient(supabaseUrl, supabaseKey);
 
     let email;
