@@ -1,8 +1,12 @@
+
+
 <script>
     import { createClient } from "@supabase/supabase-js";
-    const supabaseUrl = 'https://gzytpbcundzfdkivabpf.supabase.co'
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd6eXRwYmN1bmR6ZmRraXZhYnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzEyMjc2NDcsImV4cCI6MTk4NjgwMzY0N30.Yrpo6rBSrGCKrTVXb7ut35hA1GaMRlYrSEh15lPDmoo';
-    const supabase = createClient(supabaseUrl, supabaseKey)    
+    import { env } from '$env/dynamic/public'; //import to have public_ at the start of our environment variables
+    
+    const supabaseUrl = env.PUBLIC_SUPABASE_URL;
+    const supabaseKey = env.PUBLIC_SUPABASE_KEY;
+    const supabase = createClient(supabaseUrl, supabaseKey);
 
     let email;
     let user;
@@ -19,11 +23,10 @@
         }
         
         if(error) {
-            console.log(error);
+            console.log(error)
         }
     }
 </script>
-
 <main>
     Welcome to the SupportSearch Admin Page!
 </main>
