@@ -2,7 +2,8 @@
 
 <script>
     import { createClient } from "@supabase/supabase-js";
-    import { env } from '$env/dynamic/public'; //import to have public_ at the start of our environment variables
+    import { env } from '$env/dynamic/public';
+    import { goto } from "$app/navigation"
     
     const supabaseUrl = env.PUBLIC_SUPABASE_URL;
     const supabaseKey = env.PUBLIC_SUPABASE_KEY;
@@ -27,15 +28,21 @@
         }
     }
 </script>
-<main>
-    Welcome to the SupportSearch Admin Page!
-</main>
 
-<input type="text" placeholder="email" bind:value={email} required/>
+<div id="container" class="h-96 flex flex-col flex-wrap justify-center items-center">
+    <div id="header">
+    <main class="font-mono">
+        Welcome to the SupportSearch Admin Page
+    </main>
+    </div>
+    <div id="login">
+    <input class="px-1 border-black border-2 rounded-md focus:ring-1 ring-black ring-inset" type="text" placeholder="email" bind:value={email} required/>
 
-{#if email}
-    <button on:click={ verifyUser(email) }>Login</button>
-    {#if user}
-        <h1>{user}</h1>
+    {#if email}
+        <button class="bg-black rounded-lg text-white px-1 py-0.5 drop-shadow-md hover:opacity-75" on:click={ verifyUser(email) }>Login</button>
+        {#if user}
+            { goto("/dashboard") }
+        {/if}
     {/if}
-{/if}
+    </div>
+</div>
