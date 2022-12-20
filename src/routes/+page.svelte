@@ -2,7 +2,7 @@
 
 <script>
     import { createClient } from "@supabase/supabase-js";
-    import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_KEY } from '$env/dynamic/public';
+    import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_KEY } from '$env/static/public';
     import { goto } from "$app/navigation"
     
     const supabaseUrl = PUBLIC_SUPABASE_URL;
