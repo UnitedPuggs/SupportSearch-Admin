@@ -2,6 +2,7 @@
     import { goto } from "$app/navigation"
     import { fly } from "svelte/transition";
     
+    let userdata;
     let user;
     let enabled;
     export let email;
