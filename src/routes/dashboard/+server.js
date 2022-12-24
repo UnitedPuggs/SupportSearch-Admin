@@ -7,22 +7,20 @@ export async function GET({ url }) {
     const supabaseKey = PUBLIC_SUPABASE_KEY;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    let email = url.searchParams.get("username");
+    let license = url.searchParams.get("license");
     const { data, error } = await supabase
-    .from('users')
-    .select(`*`)
-    .eq('email', email.toLowerCase())
-    .single()
+    .from('licenses')
+    .select()
+    .ilike('license', '%' + license +'%')
 
     if(data) {
         return json({
-            username: data["email"],
-            enabled: data["enabled"]
+            licenses: data
         })
     }
-        
-    if(error)
-        console.log(error)
 
-    throw error(404, "Not found");
+    if(error)
+        console.log(error);
+
+    throw error(404, "Error occured");
 }
