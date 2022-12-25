@@ -7,22 +7,22 @@ export async function GET({ url, cookies }) {
     const supabaseKey = PUBLIC_SUPABASE_KEY;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    let email = url.searchParams.get("username");
+    let user = url.searchParams.get("username");
     const { data, error } = await supabase
     .from('users')
     .select(`*`)
-    .eq('email', email.toLowerCase())
+    .eq('username', user.toLowerCase())
     .single()
 
     if(data && data["enabled"] === true) {
-        cookies.set('session', data["email"], {
+        cookies.set('session', data["username"], {
             path: '/',
             httpOnly: true,
             sameSite: 'strict',
             maxAge: 60 * 60 * 24,
         })
         return json({
-            username: data["email"],
+            username: data["username"],
             enabled: data["enabled"]
         })
     }

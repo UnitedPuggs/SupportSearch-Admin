@@ -3,8 +3,14 @@
     import { page } from "$app/stores";
 
     let licensedata;
+    let menuon = false;
+    let menuoptions = ["Requests", "Users", "test"]
 
     export let license;
+
+    function clickMenu() {
+        menuon = !menuon;
+    }
 
     async function getLicenses() {
         const response = await fetch("/dashboard?license=" + license);
@@ -18,8 +24,13 @@
 </svelte:head>
 
 {#if $page.data.user}
-<div>
-    <button class="m-5 bg-black text-white">Menu</button>
+<div class="flex flex-row">
+<button class="my-5 ml-5 px-1.5 py-0.5 bg-black text-white drop-shadow-md hover:opacity-75 font-mono" on:click={ clickMenu }>Menu</button>
+{#if menuon}
+    {#each menuoptions as option, i}
+        <button in:fly='{{ delay: 100 + (i * 100), duration: 200 }}' out:fly='{{ delay: 100 - (i * 100), duration: 200}}' class="px-2 my-5 bg-black text-white hover:opacity-75 font-mono">{option}</button>
+    {/each}
+{/if}
 </div>
 
 <div id="container" class="h-96 flex flex-col flex-wrap justify-center items-center font-mono">
