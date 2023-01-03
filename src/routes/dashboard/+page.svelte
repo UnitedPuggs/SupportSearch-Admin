@@ -2,14 +2,14 @@
     import { fly, slide } from "svelte/transition";
     import { page } from "$app/stores";
     import SiteInfoBox from "./SiteInfoBox.svelte";
-  import { get } from "svelte/store";
 
     let licensedata;
-    let info;
     let menuOn = false;
     let menuoptions = ["Feature Requests", "Users"]
 
     let license;
+
+    
 
     function clickMenu() {
         menuOn = !menuOn;
@@ -18,43 +18,27 @@
     async function getLicenses() {
         const response = await fetch("/dashboard?license=" + license);
         licensedata = await response.json();
+        if(licensedata["licenses"].length == 0) {
+            let obj; //https://stackoverflow.com/questions/61228241/how-do-i-get-fetch-result-from-api-to-store-as-a-global-variable
+            const res = await fetch("https://" + license + ".clubspeedtiming.com/api/index.php/version/current.json?key=cs-dev").catch(err => console.log(err))
+            if(!res) {
+                const rescs = await fetch("https://" + license + ".clubspeed.com/api/index.php/version/current.json?key=cs-dev").catch(err => console.log(err))
+                obj = await rescs.json();
+            } else {
+                obj = await res.json();
+            }
+
+
+        }
         console.log(licensedata);
         licensedata = licensedata;
     }
 
-    async function getCSTimingVers(license) {
-        fetch("https://" + license + ".clubspeedtiming.com/api/index.php/version/current.json?key=cs-dev")
-        .then(response => response.json())
-        .then(data => { 
-            info = data; 
-            console.log(info); 
-        })
-        .catch(err => {
-                console.log(err);
-                if(err.message.includes("Failed to fetch"))
-                    getCSVers(license);
-        })
-        document.createElement("SiteInfoBox");
-    }
-
-    async function getCSVers(license) {
-        fetch("https://" + license + ".clubspeed.com/api/index.php/version/current.json?key=cs-dev")
-        .then(response => response.json())
-        .then(data => { 
-            info = data; 
-            console.log(info); 
-        })
-        .catch(err => {
-            console.log(err);
-        })
-    }
-
-    function abc(name) {
-        const element = new SiteInfoBox({target: document.querySelector("#k1bluffton")})
-    }
-
-    function makeVis(name) {
-        document.getElementById(name).style.display = "block"
+    function toggleVisibility(name) {
+        if(document.getElementById(name).style.display == "flex")
+            document.getElementById(name).style.display = "none";
+        else
+            document.getElementById(name).style.display = "flex";
     }
 </script>
 
@@ -88,10 +72,11 @@
         {#if licensedata && license}
             <div id="licenses" class="flex flex-col pt-5 mr-10">
             {#each licensedata["licenses"] as name}
-                <SiteInfoBox license={name.license} version={name.version} updated={name.updated} notes={name.notes} on:click={ getCSTimingVers(name.license), makeVis(name.license) }/>
+                <SiteInfoBox license={name.license} version={name.version} updated={name.updated} notes={name.notes} on:click={ toggleVisibility(name.license) }/>
             {/each}
             </div>
         {/if}
+
     </div>
 </div>
 {:else}

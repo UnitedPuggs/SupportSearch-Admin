@@ -24,3 +24,7 @@ export async function GET({ url }) {
 
     throw error(404, "Error occured");
 }
+
+export async function POST({ request }) {
+    
+}
