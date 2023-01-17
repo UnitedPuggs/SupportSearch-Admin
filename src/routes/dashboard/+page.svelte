@@ -5,7 +5,7 @@
 
     let licensedata;
     let menuOn = false;
-    let menuoptions = ["Feature Requests", "Users"]
+    let menuoptions = ["Feature Requests <wip>", "Users <wip>"]
 
     let license;
 
@@ -39,7 +39,7 @@
                     body: JSON.stringify({license: license, version: obj["CurrentVersion"], updated: obj["LastUpdated"]})
                 })
                 .catch(err => console.log(err))
-                getLicenses();
+                await getLicenses();
             }
         }
         console.log(licensedata);
