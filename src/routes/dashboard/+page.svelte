@@ -20,15 +20,27 @@
         licensedata = await response.json();
         if(licensedata["licenses"].length == 0) {
             let obj; //https://stackoverflow.com/questions/61228241/how-do-i-get-fetch-result-from-api-to-store-as-a-global-variable
-            const res = await fetch("https://" + license + ".clubspeedtiming.com/api/index.php/version/current.json?key=cs-dev").catch(err => console.log(err))
-            if(!res) {
+            const rescst = await fetch("https://" + license + ".clubspeedtiming.com/api/index.php/version/current.json?key=cs-dev").catch(err => console.log(err))
+            if(!rescst) {
                 const rescs = await fetch("https://" + license + ".clubspeed.com/api/index.php/version/current.json?key=cs-dev").catch(err => console.log(err))
                 obj = await rescs.json();
+                console.log(obj)
             } else {
-                obj = await res.json();
+                obj = await rescst.json();
             }
 
-
+            if(obj) {
+                fetch("/dashboard", {
+                    method: "post",
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: JSON.stringify({license: license, version: obj["CurrentVersion"], updated: obj["LastUpdated"]})
+                })
+                .catch(err => console.log(err))
+                getLicenses();
+            }
         }
         console.log(licensedata);
         licensedata = licensedata;
@@ -64,9 +76,8 @@
             {/if}
 
             <input class="px-1 border-black border-2 rounded-md focus:ring-1 ring-black ring-inset" type="text" placeholder="license name" bind:value={license}>
-            
             {#if license}
-                <button transition:fly='{{ y:10, duration: 750 }}' class="bg-black rounded-lg text-white px-1 py-0.5 drop-shadow-md hover:opacity-75" on:click={ getLicenses }>Search</button>
+                <button transition:fly='{{ y:10, duration: 750 }}' class="bg-black rounded-lg text-white px-1 py-0.5 drop-shadow-md hover:opacity-75" type="submit">Search</button>
             {/if}
         </form>
         {#if licensedata && license}
