@@ -16,27 +16,29 @@
     }
 
     async function getLicenses() {
-        const response = await fetch("/dashboard?license=" + license);
+        const response = await fetch("/api?license=" + license);
         licensedata = await response.json();
         if(licensedata["licenses"].length == 0) {
             let obj; //https://stackoverflow.com/questions/61228241/how-do-i-get-fetch-result-from-api-to-store-as-a-global-variable
+            let url;
             const rescst = await fetch("https://" + license + ".clubspeedtiming.com/api/index.php/version/current.json?key=cs-dev").catch(err => console.log(err))
             if(!rescst) {
                 const rescs = await fetch("https://" + license + ".clubspeed.com/api/index.php/version/current.json?key=cs-dev").catch(err => console.log(err))
                 obj = await rescs.json();
-                console.log(obj)
+                url = ".clubspeed.com";
             } else {
                 obj = await rescst.json();
+                url = ".clubspeedtiming.com";
             }
 
             if(obj) {
-                fetch("/dashboard", {
+                fetch("/api", {
                     method: "post",
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/x-www-form-urlencoded'
                     },
-                    body: JSON.stringify({license: license, version: obj["CurrentVersion"], updated: obj["LastUpdated"]})
+                    body: JSON.stringify({license: license, url: url, version: obj["CurrentVersion"], updated: obj["LastUpdated"]})
                 })
                 .catch(err => console.log(err))
                 await getLicenses();

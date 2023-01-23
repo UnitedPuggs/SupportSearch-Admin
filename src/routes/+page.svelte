@@ -9,7 +9,7 @@
     export let username;
 
     async function verifyUser() {
-        const response = await fetch("/?username=" + username);
+        const response = await fetch("/login?username=" + username);
         userdata = await response.json();
         user = userdata["username"];
         enabled = userdata["enabled"];
@@ -28,7 +28,7 @@
     <form on:submit={ verifyUser }>
         <input class="px-1 border-black border-2 rounded-md focus:ring-1 ring-black ring-inset" type="text" placeholder="username" bind:value={username} required/>
         {#if username}
-            <button transition:fly='{{ y:10, duration: 750 }}' class="bg-black rounded-lg text-white px-1 py-0.5 drop-shadow-md hover:opacity-75" on:click={ verifyUser }>Login</button>
+            <button transition:fly='{{ y:10, duration: 750 }}' class="bg-black rounded-lg text-white px-1 py-0.5 drop-shadow-md hover:opacity-75" type="submit">Login</button>
             {#if user && enabled === true}
                 { goto("/dashboard") }
             {/if}

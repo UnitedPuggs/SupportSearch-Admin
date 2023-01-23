@@ -1,13 +1,11 @@
-import { createClient } from "@supabase/supabase-js";
-import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_KEY } from '$env/static/public';
+import { supabase } from "$lib/supabaseClient"
 import { json } from "@sveltejs/kit";
 
 export async function GET({ url, cookies }) {
-    const supabaseUrl = PUBLIC_SUPABASE_URL;
-    const supabaseKey = PUBLIC_SUPABASE_KEY;
-    const supabase = createClient(supabaseUrl, supabaseKey);
+    //Make sure you're throwing your env file into the project directory
 
     let user = url.searchParams.get("username");
+
     const { data, error } = await supabase
     .from('users')
     .select(`*`)

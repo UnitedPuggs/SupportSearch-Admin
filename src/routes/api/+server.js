@@ -21,12 +21,12 @@ export async function GET({ url }) {
 }
 
 export async function POST({ request }) {
-    const { license, version, updated } = await request.json();
+    const { license, url, version, updated } = await request.json();
 
     const { data, error } = await supabase
     .from('licenses')
     .insert([
-        { license: license, version: version, updated: updated } //key: value where key is column name 
+        { license: license, url: url, version: version, updated: updated } //key: value where key is column name 
     ])
 
     if(error) {
