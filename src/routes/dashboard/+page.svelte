@@ -24,9 +24,11 @@
             if(!rescst) {
                 const rescs = await fetch("https://" + license + ".clubspeed.com/api/index.php/version/current.json?key=cs-dev").catch(err => console.log(err))
                 obj = await rescs.json();
-                console.log(obj)
+                obj += ".clubspeed.com";
+                console.log(obj);
             } else {
                 obj = await rescst.json();
+                obj += ".clubspeedtiming.com";
             }
 
             if(obj) {
