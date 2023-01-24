@@ -1,10 +1,14 @@
 <script>
     export let license;
     export let version;
-    export let updated = updated.substring(0, 10);
+    export let updated;
     export let notes;
 
-    updated = updated.substring(0, 10);
+    let focused = false;
+
+    function isFocused() {
+        focused = !focused;
+    }
 
     //Function testing :)
     function minimize(name) {
@@ -33,7 +37,8 @@
     <p>version: {version}</p>
     <p>last updated: {updated}</p>
     <div class="flex flex-row">
+        <!-- for some reason we're getting some weird behavior when the update button appears, causes the visual jolt -->  
         <p>notes: </p><input class="px-0.5 mx-1" type="text" placeholder="your note here" bind:value={notes}>
-        <button on:click={ addNote }>update</button>
+        <button class="px-0.5" on:click={ addNote }>update</button>
     </div>
 </div>

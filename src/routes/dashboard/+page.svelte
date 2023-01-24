@@ -71,7 +71,7 @@
 </div>
 
 <div id="container" class="h-96 flex flex-col flex-wrap justify-center items-center font-mono">
-    <div>
+    <div class="max-h-0 w-72">
         <form on:submit={ getLicenses }>
             {#if !license}
                 <h1 class="my-5" transition:slide='{{ delay: 100, duration: 200 }}'>What are you looking for?</h1>
@@ -85,11 +85,10 @@
         {#if licensedata && license}
             <div id="licenses" class="flex flex-col pt-5 mr-10">
             {#each licensedata["licenses"] as name}
-                <SiteInfoBox license={name.license} version={name.version} updated={name.updated} notes={name.notes} on:click={ toggleVisibility(name.license) }/>
+                <SiteInfoBox license={name.license} version={name.version} updated={name.updated.substring(0, 10)} notes={name.notes} on:click={ toggleVisibility(name.license) }/>
             {/each}
             </div>
         {/if}
-
     </div>
 </div>
 {:else}

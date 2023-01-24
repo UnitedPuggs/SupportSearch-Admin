@@ -1,7 +1,6 @@
 import { supabase } from "$lib/supabaseClient"
 
 export async function PATCH({ request }) {
-    console.log("stinky")
     const { license, notes } = await request.json();
 
     const { error } = await supabase
