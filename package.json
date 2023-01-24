@@ -1,6 +1,6 @@
 {
 	"name": "supportsearch-admin",
-	"version": "0.0.1",
+	"version": "0.5.0",
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
@@ -18,7 +18,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@supabase/supabase-js": "^2.2.1",
+		"@supabase/supabase-js": "^2.4.1",
 		"dotenv": "^16.0.3"
 	}
 }

@@ -5,7 +5,7 @@
 
     let licensedata;
     let menuOn = false;
-    let menuoptions = ["Feature Requests", "Users"]
+    let menuoptions = ["Feature Requests <wip>", "Users <wip>"]
 
     let license;
 
@@ -16,32 +16,32 @@
     }
 
     async function getLicenses() {
-        const response = await fetch("/dashboard?license=" + license);
+        const response = await fetch("/api?license=" + license);
         licensedata = await response.json();
         if(licensedata["licenses"].length == 0) {
             let obj; //https://stackoverflow.com/questions/61228241/how-do-i-get-fetch-result-from-api-to-store-as-a-global-variable
+            let url;
             const rescst = await fetch("https://" + license + ".clubspeedtiming.com/api/index.php/version/current.json?key=cs-dev").catch(err => console.log(err))
             if(!rescst) {
                 const rescs = await fetch("https://" + license + ".clubspeed.com/api/index.php/version/current.json?key=cs-dev").catch(err => console.log(err))
                 obj = await rescs.json();
-                obj += ".clubspeed.com";
-                console.log(obj);
+                url = ".clubspeed.com";
             } else {
                 obj = await rescst.json();
-                obj += ".clubspeedtiming.com";
+                url = ".clubspeedtiming.com";
             }
 
             if(obj) {
-                fetch("/dashboard", {
+                fetch("/api", {
                     method: "post",
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/x-www-form-urlencoded'
                     },
-                    body: JSON.stringify({license: license, version: obj["CurrentVersion"], updated: obj["LastUpdated"]})
+                    body: JSON.stringify({license: license, url: url, version: obj["CurrentVersion"], updated: obj["LastUpdated"]})
                 })
                 .catch(err => console.log(err))
-                getLicenses();
+                await getLicenses();
             }
         }
         console.log(licensedata);
@@ -71,7 +71,7 @@
 </div>
 
 <div id="container" class="h-96 flex flex-col flex-wrap justify-center items-center font-mono">
-    <div>
+    <div class="max-h-0 w-72">
         <form on:submit={ getLicenses }>
             {#if !license}
                 <h1 class="my-5" transition:slide='{{ delay: 100, duration: 200 }}'>What are you looking for?</h1>
@@ -85,11 +85,10 @@
         {#if licensedata && license}
             <div id="licenses" class="flex flex-col pt-5 mr-10">
             {#each licensedata["licenses"] as name}
-                <SiteInfoBox license={name.license} version={name.version} updated={name.updated} notes={name.notes} on:click={ toggleVisibility(name.license) }/>
+                <SiteInfoBox license={name.license} version={name.version} updated={name.updated.substring(0, 10)} notes={name.notes} on:click={ toggleVisibility(name.license) }/>
             {/each}
             </div>
         {/if}
-
     </div>
 </div>
 {:else}
