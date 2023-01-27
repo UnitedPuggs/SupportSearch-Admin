@@ -28,11 +28,14 @@
     <form on:submit={ verifyUser }>
         <input class="px-1 border-black border-2 rounded-md focus:ring-1 ring-black ring-inset" type="text" placeholder="username" bind:value={username} required/>
         {#if username}
-            <button transition:fly='{{ y:10, duration: 750 }}' class="bg-black rounded-lg text-white px-1 py-0.5 drop-shadow-md hover:opacity-75" type="submit">Login</button>
-            {#if user && enabled === true}
+            <button transition:fly='{{ y:10, duration: 250 }}' class="bg-black rounded-lg text-white px-1 py-0.5 drop-shadow-md hover:opacity-75" type="submit">Login</button>
+            {#if user != "Not found" && enabled === true}
                 { goto("/dashboard") }
             {/if}
         {/if}
     </form>
+    {#if user === "Not found"}
+        <p out:fly='{{ y:10, duration:750 }}' class="text-red-500 font-mono px-6">Error logging in!</p>
+    {/if}
     </div>
 </div>

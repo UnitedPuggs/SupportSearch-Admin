@@ -36,9 +36,9 @@
     <!--<button on:click={ minimize(license) }>invis</button>-->
     <p>version: {version}</p>
     <p>last updated: {updated}</p>
-    <div class="flex flex-row">
+    <div class="flex flex-row pb-1.5">
         <!-- for some reason we're getting some weird behavior when the update button appears, causes the visual jolt -->  
-        <p>notes: </p><input class="px-0.5 mx-1" type="text" placeholder="your note here" bind:value={notes}>
-        <button class="px-0.5" on:click={ addNote }>update</button>
+        <p>notes: </p><input class="px-0.5 mx-1 border-black hover:border-b-2" type="text" placeholder="your note here" bind:value={notes}>
+        <button class="px-0.5 hover:opacity-75" on:click={ addNote }>update</button>
     </div>
 </div>
