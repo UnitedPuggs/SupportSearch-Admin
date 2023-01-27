@@ -84,13 +84,13 @@
                 <h1 class="my-5" transition:slide='{{ delay: 100, duration: 200 }}'>What are you looking for?</h1>
             {/if}
 
-            <input class="px-1 border-black border-2 rounded-md focus:ring-1 ring-black ring-inset" type="text" placeholder="license name" bind:value={license}>
+            <input class="mx-auto px-1 border-black border-2 rounded-md focus:ring-1 ring-black ring-inset" type="text" placeholder="license name" bind:value={license}>
             {#if license}
                 <button transition:fly='{{ y:10, duration: 750 }}' class="bg-black rounded-lg text-white px-1 py-0.5 drop-shadow-md hover:opacity-75" type="submit">Search</button>
             {/if}
         </form>
         {#if licensedata && license}
-            <div id="licenses" class="flex flex-col pt-5 mr-24">
+            <div id="licenses" class="flex flex-col pt-5 mr-14">
             {#each licensedata["licenses"] as name}
                 <SiteInfoBox license={name.license} version={name.version} updated={name.updated.substring(0, 10)} notes={name.notes} 
                 on:click={ toggleVisibility(name.license) }/>
