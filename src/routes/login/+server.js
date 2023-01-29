@@ -27,6 +27,9 @@ export async function GET({ url, cookies }) {
         
     if(error) {
         console.log(error)
-        throw error(404, "Not found");
+        return json({
+            username: "Not found",
+            enabled: false
+        })
     }
 }
