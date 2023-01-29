@@ -24,6 +24,11 @@
             },
             body: JSON.stringify({license: license, notes: notes})
         })
+        .then(response => {
+            if(response.ok)
+                alert("Note added!");
+        })
+
     }
 </script>
 

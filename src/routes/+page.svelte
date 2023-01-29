@@ -35,7 +35,7 @@
         {/if}
     </form>
     {#if user === "Not found"}
-        <p out:fly='{{ y:10, duration:750 }}' class="text-red-500 font-mono px-6">Error logging in!</p>
+        <p out:fly='{{ y:10, duration:750 }}' class="text-red-500 font-mono font-semibold px-6">Error logging in!</p>
     {/if}
     </div>
 </div>

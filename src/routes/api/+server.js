@@ -36,3 +36,19 @@ export async function POST({ request }) {
 
     return new Response(JSON.stringify({message: "Successfully inserted!"}), {status: 201})
 }
+
+export async function PATCH({ request }) {
+    const { license, version, updated } = await request.json();
+
+    const { error } = await supabase
+    .from('licenses')
+    .update({ version: version, updated: updated})
+    .eq('license', license);
+
+    if(error) {
+        console.log(error)
+        return new Response(JSON.stringify({error: error}), {status: 400});
+    }
+
+    return new Response(JSON.stringify({message: "Version updated"}), {status: 200});
+}
