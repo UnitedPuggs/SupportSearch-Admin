@@ -15,7 +15,7 @@
         document.getElementById(name).style.display = "none";
     }
 
-    function addNote() {
+    /**function addNote() {
         fetch("/dashboard/notes", {
             method: "PATCH",
             headers: {
@@ -29,7 +29,7 @@
                 alert("Note added!");
         })
 
-    }
+    }**/
 </script>
 
 <button class="hover:opacity-75" on:click>{license}</button>
