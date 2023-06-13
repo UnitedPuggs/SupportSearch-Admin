@@ -25,7 +25,7 @@ export async function POST({ request }) {
 
     const { data, error } = await supabase
     .from('licenses')
-    .insert([
+    .upsert([
         { license: license, url: url, version: version, updated: updated } //key: value where key is column name 
     ])
 
