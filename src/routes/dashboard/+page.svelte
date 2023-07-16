@@ -4,8 +4,6 @@
     import SiteInfoBox from "./SiteInfoBox.svelte";
 
     let licensedata;
-    let menuOn = false;
-    let menuoptions = ["Feature Requests <wip>", "Script Requests <wip>"]
 
     let license;
 
@@ -17,11 +15,6 @@
     function clearPreviousSearch() {
         licensedata["licenses"] = [];
         licensedata = licensedata;
-    }
-
-    //Toggles the little corner menu button :)
-    function clickMenu() {
-        menuOn = !menuOn;
     }
 
     //Toggles visibility of SiteInfoBox components
@@ -88,14 +81,10 @@
     <title>Dashboard</title>
 </svelte:head>
 
-{#if $page.data.user} <!-- Checks to see if you're logged in -->
-<div class="flex flex-row">
-<button class="my-5 ml-5 px-1 py-0.5 bg-black text-white drop-shadow-md hover:opacity-75 font-mono" on:click={ clickMenu }>Menu</button>
-{#if menuOn} <!-- Fun little animation for the menu to roll out -->
-    {#each menuoptions as option, i}
-        <button in:fly='{{ delay: 100 + (i * 100), duration: 200 }}' out:fly='{{ delay: 100 - (i * 100), duration: 200}}' class="px-1 my-5 bg-black text-white hover:opacity-75 font-mono">{option}</button>
-    {/each}
-{/if}
+{#if $page.data.session?.user} <!-- Checks to see if you're logged in -->
+<div class="flex flex-row ml-5 gap-1">
+    <button class="my-5 px-1 py-0.5 drop-shadow-md hover:opacity-75 font-mono">Feature Requests</button>
+    <button class="my-5 px-1 py-0.5 drop-shadow-md hover:opacity-75 font-mono">Script Requests</button>
 </div>
 
 <div id="container" class="h-96 flex flex-col flex-wrap justify-center items-center font-mono">

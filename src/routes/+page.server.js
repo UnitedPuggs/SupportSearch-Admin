@@ -1,13 +1,9 @@
 import { redirect } from "@sveltejs/kit";
 
-export async function load({ cookies }) {
-    const sessionId = cookies.get('session');
+export async function load({ parent }) {
+    const { session } = await parent()
+    if(session)
+        throw redirect(302, "/dashboard")
 
-    if(sessionId) {
-        throw redirect(302, '/dashboard');
-    }
-
-    return {
-        user: sessionId
-    }
+    return {}
 }

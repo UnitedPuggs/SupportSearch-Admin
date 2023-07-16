@@ -1,1 +1,1 @@
-<h1>Looks like I'm having some trouble with your request... try something else?</h1>
+<h1>Looks like we're having some trouble with your request... try something else?</h1>
