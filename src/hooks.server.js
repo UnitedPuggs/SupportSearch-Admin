@@ -14,7 +14,11 @@ export const handle = SvelteKitAuth(async (event) => {
             },
         },
         secret: AUTH_SECRET,
-        trustHost: true
+        trustHost: true,
+        session: {
+            maxAge: 5 * 24 * 60 * 60,
+            updateAge: 5 * 24 * 60 * 60,
+        },
     }
     return authOptions
 })
