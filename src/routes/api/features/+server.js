@@ -22,6 +22,7 @@ export async function GET() {
     const { data, error } = await supabase
     .from('features')
     .select('*')
+    .order('requested_on', {ascending: true})
 
     if(data) {
         return new Response(JSON.stringify({features: data}, {status: 200}))
