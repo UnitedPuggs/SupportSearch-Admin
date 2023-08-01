@@ -1,7 +1,7 @@
 <script>
     import { fly, slide } from "svelte/transition";
     import { page } from "$app/stores";
-    import SiteInfoBox from "./SiteInfoBox.svelte";
+    import SiteInfoBox from "../../lib/SiteInfoBox.svelte";
 
     let licensedata;
 
@@ -78,32 +78,36 @@
 </script>
 
 <svelte:head>
-    <title>Dashboard</title>
+    <title>dashboard</title>
 </svelte:head>
 
 {#if $page.data.session?.user} <!-- Checks to see if you're logged in -->
-<div class="flex flex-row ml-5 gap-1">
-    <button class="my-5 px-1 py-0.5 drop-shadow-md hover:opacity-75 font-mono">Feature Requests</button>
-    <button class="my-5 px-1 py-0.5 drop-shadow-md hover:opacity-75 font-mono">Script Requests</button>
+<div class="flex flex-row ml-5">
+    <a class="my-5 px-1 py-0.5 hover:opacity-75 font-mono" href="dashboard/feature-req">feature requests</a>
 </div>
 
 <div id="container" class="h-96 flex flex-col flex-wrap justify-center items-center font-mono">
     <div class="max-h-0 w-72">
         <form on:submit={ getLicenses }> 
             {#if !license}
-                <h1 class="my-5" transition:slide='{{ delay: 100, duration: 200 }}'>What are you looking for?</h1>
+                <h1 class="my-5" transition:slide|local='{{ delay: 100, duration: 200 }}'>What are you looking for?</h1>
             {/if}
 
             <input class="mx-auto px-1 border-black border-2 rounded-md focus:ring-1 ring-black ring-inset" type="text" placeholder="license name" bind:value={license}>
             {#if license}
-                <button transition:fly='{{ y:10, duration: 750 }}' class="bg-black rounded-lg text-white px-1 py-0.5 drop-shadow-md hover:opacity-75" type="submit">Search</button>
+                <button transition:fly|local='{{ y:10 }}' class="bg-black rounded-lg text-white px-1 py-0.5 hover:opacity-75" type="submit">Search</button>
             {/if}
         </form>
         {#if licensedata && license}
             <div id="licenses" class="flex flex-col pt-5 mr-14">
             {#each licensedata["licenses"] as name}
-                <SiteInfoBox license={name.license} version={name.version} updated={name.updated.substring(0, 10)} notes={name.notes} 
-                on:click={ toggleVisibility(name.license) }/>
+                <SiteInfoBox 
+                license={name.license} 
+                version={name.version} 
+                updated={name.updated.substring(0, 10)} 
+                notes={name.notes} 
+                on:click={ toggleVisibility(name.license) }
+                />
             {/each}
             </div>
         {/if}
