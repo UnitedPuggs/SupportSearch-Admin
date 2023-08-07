@@ -7,7 +7,7 @@ export async function GET({ url }) {
     let { data: licenses, error } = await supabase
     .from('licenses')
     .select('license')
-    .eq('version', version)
+    .ilike('version', version)
 
     if(licenses) {
         return json({
