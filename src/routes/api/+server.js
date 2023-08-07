@@ -1,7 +1,9 @@
 import { supabase } from "$lib/supabaseClient"
 import { json } from "@sveltejs/kit";
 
-export async function GET({ url }) {
+export async function GET({ url, locals }) {
+    const session = await locals.getSession();
+
     let license = url.searchParams.get("license");
     const { data, error } = await supabase
     .from('licenses')
@@ -9,6 +11,12 @@ export async function GET({ url }) {
     .ilike('license', '%' + license +'%');
 
     if(data) {
+        if(!session) {
+            for(let i = 0; i < data.length; ++i) {
+                delete data[i].notes
+            }
+        }
+
         return json({
             licenses: data
         });
