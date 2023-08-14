@@ -2,6 +2,7 @@
     import MakeRequest from "$lib/MakeRequest.svelte";
     import { onMount } from "svelte";
     import Request from "../../../lib/Request.svelte";
+    import { page } from '$app/stores'
 
     let features = []
 
@@ -24,6 +25,7 @@
     </title>
 </svelte:head>
 
+{#if $page.data.session?.user}
 <body class="font-mono">
     <div class="my-5 px-1 py-0.5">
         <a href="/dashboard" class="hover:opacity-75 ml-5">&lt;---</a>
@@ -35,3 +37,6 @@
         {/each}
     </div>
 </body>
+{:else}
+    <h1>You'll need to log in to see this :)</h1>
+{/if}
